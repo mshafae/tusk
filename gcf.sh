@@ -179,9 +179,8 @@ lab_computer_check
 
 if [ ${GCF_IS_LAB_COMPUTER}"x" = "YESx" ]; then
     echo "This script can only be used on your personal computer like a laptop"
-    echo "or your home computer. This script cannot be used on computer in a"
-    echo "school lab. You will need to configure git manually using the "
-    echo "commands:"
+    echo "or your home computer. This script cannot be used on school lab"
+    echo "computer. You will need to configure git manually using the commands:"
     echo "git config --global user.name \"Tuffy Titan\""
     echo "git config --global user.email \"tuffy@csu.fullerton.edu\""
     echo "Replace \"Tuffy Titan\" with your name."
