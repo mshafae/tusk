@@ -18,7 +18,7 @@ backup_file ()
 
 lab_computer_check () {
     export GCF_IS_LAB_COMPUTER="NO"
-    PROMPT="Is this a lab computer? (y/n) "
+    PROMPT="Is this a lab computer? [y/n] "
     OUTER=true
     RESPONSE="${2:-"Thank you."}"
     while $OUTER; do
