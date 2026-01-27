@@ -41,7 +41,7 @@ lab_computer_check () {
 
 make_check () {
     export GCF_CAN_MAKE="NO"
-    if ! command -v make &> /dev/null; then
+    if ! command -v make > /dev/null; then
         echo "The make command  could not be found"
         export GCF_CAN_MAKE="YES"
     fi
@@ -49,7 +49,7 @@ make_check () {
 
 gcc_check () {
     export GCF_CAN_GCC="NO"
-    if ! command -v gcc &> /dev/null; then
+    if ! command -v gcc > /dev/null; then
         echo "The gcc command  could not be found"
         export GCF_CAN_GCC="YES"
     fi
