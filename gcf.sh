@@ -263,10 +263,10 @@ if [ ${GCF_IS_LAB_COMPUTER}"x" = "NOx" ]; then
         echo "software which will save your GitHub PAT. This is a bummer."
         echo "You still have a correctly configured git client, you will"
         echo "just have to copy and paste your PAT."
+        echo "Try to commit some changes to see what happens."
+        exit 1
     fi
 
-
-    echo
     echo "You're all set! Try using git to push or clone and see if your credentials are saved."
     echo "If you need to add or remove your GitHub password use the program named 'Passwords and Keys' and click 'Login', look for https://@github.com. Right click on it and you can edit the your saved GitHub password."
 else
