@@ -82,7 +82,7 @@ git_libsecret_install () {
     LIBSECRETGIT="/usr/share/doc/git/contrib/credential/libsecret"
     PREREQ="git make gcc libglib2.0-dev"
     HAS_PREREQ="YES"
-    echo "Checking for prerequisite packages before building libsecret..."
+    echo "Checking for prerequisite packages before building libsecret…"
     for P in ${PREREQ}; do
         dpkg-query -W -f='${Package} ${Status} ${Version}\n' ${P} > /dev/null
         if [ $? -ne 0 ]; then
@@ -98,7 +98,7 @@ git_libsecret_install () {
         echo "Try running:"
         echo "wget -q https://raw.githubusercontent.com/mshafae/tusk/main/quickinstall.sh -O- | sh"
         echo "This will install all the software you need for writing C++ programs."
-        echo "Exiting...git is not configured."
+        echo "Exiting…git is not configured."
         exit 1
     else
         echo "If you are prompted for a password, type in the password"
@@ -115,10 +115,10 @@ git_libsecret_install () {
         done
         if [ ${MISSING_PACKAGES}"x" = "YESx" ]; then
             sudo apt-get update
-            echo "Updated your packages, let's install some packages..."    
+            echo "Updated your packages, let's install some packages…"    
             sudo apt-get install -y ${PACKAGES}
         fi
-        echo "Great, the packages were installed. Let's build libsecret..."
+        echo "Great, the packages were installed. Let's build libsecret…"
         sudo make -C ${LIBSECRETGIT}
         if [ $? -ne 0 ]; then
             echo "There was a problem building git's libsecret plugin. Exiting. Please report this to mshafae@fullerton.edu."
@@ -200,10 +200,10 @@ fi
 GITCONFIG=${1:-"${HOME}/.gitconfig"}
 echo "We are going to edit the file ${GITCONFIG} to make git work better for you."
 echo "Ready, set, go!"
-prompt_confirm_repeat "What is your full name? Please include your first and last name. " "Great, here's another question..."
+prompt_confirm_repeat "What is your full name? Please include your first and last name. " "Great, here's another question…"
 NAME=${RETVAL}
 
-prompt_confirm_repeat "What's your CSUF email address? " "Excellent, here's another question..."
+prompt_confirm_repeat "What's your CSUF email address? " "Excellent! Almost done…"
 EMAIL=${RETVAL}
 
 if [ -e ${GITCONFIG} ]; then
@@ -216,7 +216,7 @@ mkgitconfig "${GITCONFIG}" "${NAME}" "${EMAIL}"
 
 if [ ${GCF_IS_LAB_COMPUTER}"x" = "NOx" ]; then
 
-    echo "Let's see if we can cache your PAT..."
+    echo "Let's see if we can cache your PAT…"
     gcc_check
     make_check
     sudo_check
