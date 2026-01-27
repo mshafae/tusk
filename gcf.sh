@@ -41,22 +41,37 @@ lab_computer_check () {
 
 make_check () {
     export GCF_CAN_MAKE="NO"
-    if ! command -v make > /dev/null; then
-        echo "The make command  could not be found"
+    if command -v make > /dev/null 2>&1; then
+        # echo "The make command could not be found"
+        echo "✅ has make"
         export GCF_CAN_MAKE="YES"
+    else
+        echo "🚫 missing make"
     fi
 }
 
 gcc_check () {
     export GCF_CAN_GCC="NO"
-    if ! command -v gcc > /dev/null; then
-        echo "The gcc command  could not be found"
+    if command -v gcc > /dev/null 2>&1; then
+        # echo "The gcc command could not be found"
+        echo "✅ has gcc"
         export GCF_CAN_GCC="YES"
+    else
+        echo "🚫 missing gcc"
     fi
 }
 
 sudo_check () {
     export GCF_CAN_SUDO="NO"
+    if command -v sudo > /dev/null 2>&1; then
+        # echo "The gcc command could not be found"
+        echo "✅ has sudo"
+        export GCF_CAN_GCC="YES"
+    else
+        echo "🚫 missing sudo"
+        return
+    fi
+
     echo "We are going to check to see if you can run commands as root."
     echo "The root user is the administrator and sometimes you may not"
     echo "have access to programs like sudo and su which allow you to run"
