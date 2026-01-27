@@ -182,14 +182,19 @@ EOF
 lab_computer_check
 
 if [ ${GCF_IS_LAB_COMPUTER}"x" = "YESx" ]; then
-    echo "This script can only be used on your personal computer like a laptop"
-    echo "or your home computer. This script cannot be used on school lab"
-    echo "computer. You will need to configure git manually using the commands:"
-    echo "git config --global user.name \"Tuffy Titan\""
-    echo "git config --global user.email \"tuffy@csu.fullerton.edu\""
-    echo "Replace \"Tuffy Titan\" with your name."
-    echo "Replace \"tuffy@csu.fullerton.edu\" with your CSUF email address."
-    exit 0
+    echo "This script can only configure your git utility with your name and"
+    echo "email address. It cannot cache (save) your PAT to your account."
+    echo "When you have your own laptop or personal computer that is running"
+    echo "Linux, you can re-run this program to configure git and cache (save)"
+    echo "your PAT."
+    # echo "This script can only be used on your personal computer like a laptop"
+    # echo "or your home computer. This script cannot be used on school lab"
+    # echo "computer. You will need to configure git manually using the commands:"
+    # echo "git config --global user.name \"Tuffy Titan\""
+    # echo "git config --global user.email \"tuffy@csu.fullerton.edu\""
+    # echo "Replace \"Tuffy Titan\" with your name."
+    # echo "Replace \"tuffy@csu.fullerton.edu\" with your CSUF email address."
+    # exit 0
 fi
 
 GITCONFIG=${1:-"${HOME}/.gitconfig"}
@@ -209,35 +214,44 @@ fi
 echo "Let's write out a new git configuration."
 mkgitconfig "${GITCONFIG}" "${NAME}" "${EMAIL}"
 
-echo "Let's see if we can cache your PAT..."
-gcc_check
-make_check
-sudo_check
+if [ ${GCF_IS_LAB_COMPUTER}"x" = "NOx" ]; then
 
-if [ ${GCF_CAN_GCC}"x" = "NOx" ] && [ ${GCF_CAN_MAKE}"x" = "NOx" ]; then
-    echo "Double check to make sure you have installed all"
-    echo "the tools needed for your development environment."
-    echo "Run the command"
-    echo "wget -q https://raw.githubusercontent.com/mshafae/tusk/main/quickinstall.sh -O- | sh"
-    echo "to install the CPSC 120 development environment."
-    echo "Then re-run this command."
-    exit 1
-fi
+    echo "Let's see if we can cache your PAT..."
+    gcc_check
+    make_check
+    sudo_check
 
-if [ ${GCF_CAN_SUDO}"x" = "YESx" ]; then
+    if [ ${GCF_CAN_GCC}"x" = "NOx" ] && [ ${GCF_CAN_MAKE}"x" = "NOx" ]; then
+        echo "Could not find a compiler or Make. We can't cache your PAT."
+        echo "Your git configuration was created and you can use git to"
+        echo "push and pull changes from your remote repository (GitHub)."
+        echo "You will have to copy and paste your PAT for now."
+        echo "If this is your personal computer (not a school lab computer)"
+        echo "and you encounter this message then double check to make sure"
+        echo "you have installed all the tools needed for your development"
+        echo "environment. Don't be shy and ask an instructor for help."
+        echo "Run the command"
+        echo "wget -q https://raw.githubusercontent.com/mshafae/tusk/main/quickinstall.sh -O- | sh"
+        echo "to install the CPSC 120 development environment."
+        echo "Then re-run this command to set up PAT caching (saving)."
+        exit 1
+    fi
+
+    if [ ${GCF_CAN_SUDO}"x" = "YESx" ]; then
+        echo
+        echo "We're about to install some software and compile a few things."
+        echo "This may take a minute."
+        echo
+        git_libsecret_install
+    else
+        echo "Since you can't run commands as root, we can't install the"
+        echo "software which will save your GitHub PAT. This is a bummer."
+        echo "You still have a correctly configured git client, you will"
+        echo "just have to copy and paste your PAT."
+    fi
+
+
     echo
-    echo "We're about to install some software and compile a few things."
-    echo "This may take a minute."
-    echo
-    git_libsecret_install
-else
-    echo "Since you can't run commands as root, we can't install the"
-    echo "software which will save your GitHub PAT. This is a bummer."
-    echo "You still have a correctly configured git client, you will"
-    echo "just have to copy and paste your PAT."
+    echo "You're all set! Try using git to push or clone and see if your credentials are saved."
+    echo "If you need to add or remove your GitHub password use the program named 'Passwords and Keys' and click 'Login', look for https://@github.com. Right click on it and you can edit the your saved GitHub password."
 fi
-
-
-echo
-echo "You're all set! Try using git to push or clone and see if your credentials are saved."
-echo "If you need to add or remove your GitHub password use the program named 'Passwords and Keys' and click 'Login', look for https://@github.com. Right click on it and you can edit the your saved GitHub password."
