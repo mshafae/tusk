@@ -16,6 +16,25 @@ backup_file ()
   cp "$FILENAME" "${NEWFILENAME}"
 }
 
+lab_computer_check () {
+    export GCF_IS_LAB_COMPUTER="NO"
+    PROMPT="Is this a lab computer? (y/n) "
+    OUTER=true
+    RESPONSE="${2:-"Thank you."}"
+    while $OUTER; do
+        read -p "${PROMPT}" RETVAL
+        echo "You entered \"${RETVAL}\""
+        while true; do
+            read -p "Is this correct? [y/n] " YN
+            case $YN in
+                [Yy]* ) export GCF_IS_LAB_COMPUTER="YES"; echo "${RESPONSE}"; OUTER=false; break;;
+                [Nn]* ) unset YN; break;;
+                * ) echo "Please answer y or n.";;
+            esac
+        done
+    done
+}
+
 make_check () {
     export GCF_CAN_MAKE="NO"
     if ! command -v make &> /dev/null; then
@@ -155,6 +174,18 @@ EOF
 ######
 # Main
 ######
+
+lab_computer_check
+
+if [ ${GCF_IS_LAB_COMPUTER}"x" == "YESx" ]; then
+    echo "This script can only be used on your personal computer like a laptop"
+    echo "or your home computer. This script cannot be used on computer in a"
+    echo "school lab. You will need to configure git manually using the "
+    echo "commands:"
+    echo "git config --global user.name \"Tuffy Titan\""
+    echo "git config --global user.email \"tuffy@csu.fullerton.edu\""
+    exit 0
+fi
 
 GITCONFIG=${1:-"${HOME}/.gitconfig"}
 echo "We are going to edit the file ${GITCONFIG} to make git work better for you."
