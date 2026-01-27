@@ -19,22 +19,22 @@ backup_file ()
 lab_computer_check () {
     export GCF_IS_LAB_COMPUTER="NO"
     PROMPT="Is this a lab computer? [y/n] "
-    OUTER=true
     RESPONSE="${2:-"Thank you."}"
-    while $OUTER; do
-        read -p "${PROMPT}" RETVAL
-        echo "You entered \"${RETVAL}\""
-        while true; do
-            read -p "Is this correct? [y/n] " YN
-            case $YN in
-                [Yy]* ) echo "${RESPONSE}"; OUTER=false; break;;
-                [Nn]* ) unset YN; break;;
-                * ) echo "Please answer y or n.";;
-            esac
-        done
+    # LOOPCNTRL=true
+    # read -p "${PROMPT}" RETVAL
+    # echo "You entered \"${RETVAL}\""
+    while true; do
+        read -p "${PROMPT}" YN
+        # echo "You entered \"${RETVAL}\""
+        # read -p "Is this correct? [y/n] " YN
+        case $YN in
+            [Yy]* ) echo "${RESPONSE}"; break;;
+            [Nn]* ) unset YN; break;;
+            * ) echo "Please answer y or n.";;
+        esac
     done
-    RETVAL=`echo ${RETVAL} | tr '[:upper:]' '[:lower:]'`
-    if [ ${RETVAL}"x" = "yx" ]; then
+    YN=`echo ${YN} | tr '[:upper:]' '[:lower:]'`
+    if [ ${YN}"x" = "yx" ]; then
         export GCF_IS_LAB_COMPUTER="YES"
     fi
 }
