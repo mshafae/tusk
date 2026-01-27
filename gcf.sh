@@ -254,4 +254,7 @@ if [ ${GCF_IS_LAB_COMPUTER}"x" = "NOx" ]; then
     echo
     echo "You're all set! Try using git to push or clone and see if your credentials are saved."
     echo "If you need to add or remove your GitHub password use the program named 'Passwords and Keys' and click 'Login', look for https://@github.com. Right click on it and you can edit the your saved GitHub password."
+else
+    echo "You're all set! Try to commit some changes to see what happens."
 fi
+
