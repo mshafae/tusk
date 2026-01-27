@@ -27,12 +27,16 @@ lab_computer_check () {
         while true; do
             read -p "Is this correct? [y/n] " YN
             case $YN in
-                [Yy]* ) export GCF_IS_LAB_COMPUTER="YES"; echo "${RESPONSE}"; OUTER=false; break;;
+                [Yy]* ) echo "${RESPONSE}"; OUTER=false; break;;
                 [Nn]* ) unset YN; break;;
                 * ) echo "Please answer y or n.";;
             esac
         done
     done
+    RETVAL=`echo ${RETVAL} | tr '[:upper:]' '[:lower:]'`
+    if [ ${RETVAL}"x" = "yx" ]; then
+        export GCF_IS_LAB_COMPUTER="YES"
+    fi
 }
 
 make_check () {
