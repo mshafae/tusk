@@ -184,6 +184,8 @@ if [ ${GCF_IS_LAB_COMPUTER}"x" = "YESx" ]; then
     echo "commands:"
     echo "git config --global user.name \"Tuffy Titan\""
     echo "git config --global user.email \"tuffy@csu.fullerton.edu\""
+    echo "Replace \"Tuffy Titan\" with your name."
+    echo "Replace \"tuffy@csu.fullerton.edu\" with your CSUF email address."
     exit 0
 fi
 
