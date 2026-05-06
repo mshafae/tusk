@@ -8,7 +8,7 @@
 # 
 
 PROJECT_ROOT="/home/mshafae/github/tusk/docker"
-RELEASES="22-jammy 24-noble"
+RELEASES="22-jammy 24-noble 26-resolute"
 ALPINE_RELEASES="3"
 PROJECT="tusk"
 
