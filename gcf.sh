@@ -97,6 +97,7 @@ git_libsecret_install () {
     LIBSECRETGIT="/usr/share/doc/git/contrib/credential/libsecret"
     PREREQ="git make gcc libglib2.0-dev"
     HAS_PREREQ="YES"
+
     echo "Checking for prerequisite packages before building libsecret…"
     for P in ${PREREQ}; do
         dpkg-query -W -f='${Package} ${Status} ${Version}\n' ${P} > /dev/null
@@ -132,16 +133,25 @@ git_libsecret_install () {
             sudo apt-get update
             echo "Updated your packages, let's install some packages…"    
             sudo apt-get install -y ${PACKAGES}
+            if [ $? -ne 0 ]; then
+                echo "There was a problem installing the needed software."
+                echo "If you see a message that says:"
+                echo "Could not get lock /var/lib/dpkg/lock-frontend. It is held by process…"
+                echo "Then restart your computer and try running this program again."
+                echo "If the problem doesn't resolve itself after restarting, ask your instructor for help."
+                exit 1
+            fi
         fi
         echo "Great, the packages were installed. Let's build libsecret…"
         sudo make -C ${LIBSECRETGIT}
         if [ $? -ne 0 ]; then
-            echo "There was a problem building git's libsecret plugin. Exiting. Please report this to mshafae@fullerton.edu."
+            echo "There was a problem building git's libsecret plugin. Exiting. Please report this to mshafae@fullerton.edu and talk to your instructor"
             exit 1
         fi
         echo "Excellent, we've got all the parts ready to go."
         git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
     fi
+    echo "Success installing libsecret!"
 }
 
 prompt_confirm_repeat () {
